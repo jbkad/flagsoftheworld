@@ -4,7 +4,7 @@ const Header = () => {
       <>
         <div className='header'>
           <div>
-            <h3 className="">Flags of the world 🌍</h3>
+            <h3 className="">Flags Around The World 🌍</h3>
             <h5>
               <a
                 href="https://www.linkedin.com/in/jbkad/"
