@@ -20,6 +20,7 @@ import quizQuestions from './functions/quizQuestions';
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
   useEffect(() => {
     async function startGame () {
@@ -45,9 +46,6 @@ import quizQuestions from './functions/quizQuestions';
     setTimeout(() => {
       setIsWrongAnswer(false);
     }, 2000);
-
-  // clears form when answer is wrong
-    return <></>;
   }
 
   const checkAnswer = (question: any, userAnswer: string) => {
@@ -60,6 +58,13 @@ import quizQuestions from './functions/quizQuestions';
       setScore(score + 1)
       newQuestion();
       setIsWrongAnswer(false);
+      setIsCorrectAnswer(true);
+
+      // clears 'Correct answer!' prompt after 2s
+      setTimeout(() => {
+        setIsCorrectAnswer(false);
+      }, 600);
+
       return correct
     } else {
       wrongAnswer();
@@ -68,8 +73,8 @@ import quizQuestions from './functions/quizQuestions';
   };
 
   function newQuestion () {
-    const idx = Math.floor(Math.random()*questions.length)
-    setQuestion(questions.splice(idx, 1)[0])
+    const idx = Math.floor(Math.random()*questions.length);
+    setQuestion(questions.splice(idx, 1)[0]);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -89,10 +94,10 @@ import quizQuestions from './functions/quizQuestions';
         <button onClick={newQuestion} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
           {Boolean(question) ? 'Skip' : 'Start'}
         </button>
-        <div className='skip-text'>Or press key "1"</div>
+        <div className='skip-text'>{Boolean(question) ? 'Or press key "1"' : ''}</div>
         <br />
-        {Boolean(question) ? 
-          <div className={(isWrongAnswer) ? 'label-answer text-danger' : 'label-answer text-secondary-emphasis'}>{(isWrongAnswer) ? 'Wrong Answer!' : 'Enter Answer'}</div>
+        {Boolean(question) ?  
+          <div className={(isWrongAnswer) ? 'label-answer text-danger' : isCorrectAnswer ? 'label-answer text-success' : 'label-answer text-secondary-emphasis'}>{isWrongAnswer ? 'Wrong Answer!' : isCorrectAnswer ? 'Correct Answer!' : 'Enter Answer'}</div>
         : ''}
         <Answers question={question} checkAnswer={checkAnswer} />
       </div>

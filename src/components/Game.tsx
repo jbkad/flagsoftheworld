@@ -17,7 +17,7 @@ const Game = ({question}: {question: any}) => {
     return (
       <>
         <div>
-          <h2 className="flag">Want to test your geography knowledge? <br /> Ready for the ultimate flag challenge? <br /> Press "Start" to begin!</h2>
+          <h2 className="flag">Want to test your geography knowledge? <br /> Ready for the ultimate flag challenge? <br /> Press <strong>"Start"</strong> to begin!</h2>
         </div>
       </>
     );
