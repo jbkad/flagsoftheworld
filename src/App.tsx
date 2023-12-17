@@ -5,7 +5,6 @@ import './App.css';
 import Header from './components/Header';
 import Game from './components/Game';
 import Score from './components/Score';
-import Timer from './components/Timer';
 import Answers from './components/Answers';
 import quizQuestions from './functions/quizQuestions';
 
