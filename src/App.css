@@ -30,8 +30,20 @@ html, body {
   min-height: 85vh;
 }
 
-.flag-img {
-  padding: 50px 0;
+/* flags images */
+.flag {
+  text-align: center;
+}
+
+.flag-container{
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.flag img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* answer form css */
@@ -42,7 +54,16 @@ html, body {
   box-sizing: border-box;
 }
 
-/* footer css */
+.label-answer {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin: 15px;
+}
+
+/* header css */
 .header {
   display: flex;
   justify-content: space-between;
@@ -50,11 +71,21 @@ html, body {
 }
 
 .header a {
+  font-size: 1rem;
   color: #e53170;
   text-decoration: none;
+  background-color: rgb(255, 240, 250);
+  border-radius: 2px;
+  padding: 5px;
 }
 
 .header a:hover {
   color: #f25f4c;
+  background-color: rgb(240, 244, 255);
   text-decoration: underline;
+}
+
+.skip-text {
+  font-size: 0.8rem;
+  margin: 5px;
 }

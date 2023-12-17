@@ -13,18 +13,19 @@ const Answers = ({question, checkAnswer}: {question: any, checkAnswer: any}) => 
         }
     }
 
-    return (<>
-        <form onSubmit={handleSubmit} className='spacing'>
-            {Boolean(question) ? <label className="form-label mt-4">Enter Answer</label> : ''}
-            <input
-                type="text"
-                className="form-control answer-box"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-            />
-            <small className="form-text text-muted">TIP: Answers are case sensitive</small>
-        </form>
-    </>)
+    return (
+        <>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    className="form-control answer-box"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                />
+                <small className="form-text text-muted">TIP: Answers are case sensitive</small>
+            </form>
+        </>
+    )
 }
 
 export default Answers

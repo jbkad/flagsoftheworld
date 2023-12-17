@@ -3,21 +3,19 @@ const Header = () => {
     return (
       <>
         <div className='header'>
-          <div>
-            <h3 className="">Flags Around The World 🌍</h3>
-            <h5>
-              <a
-                href="https://www.linkedin.com/in/jbkad/"
-                target='_blank' 
-                rel="noreferrer"
-              >
-                By Joyce Kadibu
-              </a>
-            </h5>
+          <div className="title">
+            <h3>Flags Around <br /> The World 🌍</h3>
+            <a
+              href="https://www.linkedin.com/in/jbkad/"
+              target='_blank' 
+              rel="noreferrer"
+            >
+              By Joyce Kadibu
+            </a>
           </div>
-        
+
           <div className="help-btn">
-            <span className="text-body">Beta</span> 
+            <span className="text-body">Beta version</span> 
           </div>
         </div>
       </>

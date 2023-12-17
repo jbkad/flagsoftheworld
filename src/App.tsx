@@ -19,13 +19,13 @@ import quizQuestions from './functions/quizQuestions';
   const [gameOver, setGameOver] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
+  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
 
   useEffect(() => {
     async function startGame () {
       // resets the game
       setLoading(true);
       setScore(0);
-      setGameOver(false);
 
       // fetch the questions
       const newQuestions = await quizQuestions();
@@ -39,19 +39,31 @@ import quizQuestions from './functions/quizQuestions';
   }, []);
 
   function wrongAnswer(){
+    setIsWrongAnswer(true);
+
+    // clears 'Wrong answer!' prompt after 2s
+    setTimeout(() => {
+      setIsWrongAnswer(false);
+    }, 2000);
+
   // clears form when answer is wrong
     return <></>;
   }
 
   const checkAnswer = (question: any, userAnswer: string) => {
-    // eslint-disable-next-line eqeqeq
-    const correct: boolean = (question.name.common == userAnswer) || (question.name.official == userAnswer) 
+    const correct: boolean = 
+      question.name.common === userAnswer ||
+      question.name.official === userAnswer ||
+      question.name.altSpellings === userAnswer
+
     if (correct) {
       setScore(score + 1)
-      newQuestion()
+      newQuestion();
+      setIsWrongAnswer(false);
       return correct
     } else {
-      return wrongAnswer
+      wrongAnswer();
+      return false;
     }
   };
 
@@ -59,23 +71,31 @@ import quizQuestions from './functions/quizQuestions';
     const idx = Math.floor(Math.random()*questions.length)
     setQuestion(questions.splice(idx, 1)[0])
   }
-  
-  // switches the 'start' button color.
-  const buttonClass = Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn';
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "1") {
+      newQuestion();
+      e.preventDefault();
+    }
+  };
 
   return (
     <>
       <Header />
-        <div className="app">
-          <Score score={score} />
-          <Game question={question} />
-          <br/>
-          <button onClick={newQuestion} className={buttonClass}>
-            {Boolean(question) ? 'Skip' : 'Start'}
-          </button>
-          <Answers question={question} checkAnswer={checkAnswer} />
-        </div>
+      <div className="app" onKeyDown={handleKeyDown} tabIndex={0}>
+        <Score score={score} />
+        <Game question={question} />
+        <br/>
+        <button onClick={newQuestion} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
+          {Boolean(question) ? 'Skip' : 'Start'}
+        </button>
+        <div className='skip-text'>Or press key "1"</div>
+        <br />
+        {Boolean(question) ? 
+          <div className={(isWrongAnswer) ? 'label-answer text-danger' : 'label-answer text-secondary-emphasis'}>{(isWrongAnswer) ? 'Wrong Answer!' : 'Enter Answer'}</div>
+        : ''}
+        <Answers question={question} checkAnswer={checkAnswer} />
+      </div>
     </>
   );
 }
