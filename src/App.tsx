@@ -12,8 +12,10 @@ import quizQuestions from './functions/quizQuestions';
 // functions
   const Country:React.FC = () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
   let [score, setScore] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [gameOver, setGameOver] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
@@ -42,6 +44,7 @@ import quizQuestions from './functions/quizQuestions';
   }
 
   const checkAnswer = (question: any, userAnswer: string) => {
+    // eslint-disable-next-line eqeqeq
     const correct: boolean = (question.name.common == userAnswer) || (question.name.official == userAnswer) 
     if (correct) {
       setScore(score + 1)
