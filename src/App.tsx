@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 // components
 import Header from './components/Header';
-import Game from './components/Game';
 import Score from './components/Score';
 import Answers from './components/Answers';
 import quizQuestions from './functions/quizQuestions';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Notice from './pages/Notice';
 
 
 // functions
@@ -21,10 +22,40 @@ import quizQuestions from './functions/quizQuestions';
   const [question, setQuestion] = useState(null);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+  const [showFlagName, setShowFlagName] = useState(false);
+
+
+  const Game = ({ question }: { question: any }) => {
+
+    if (question) {
+      return (
+        <>
+          <div className="flag-container">
+            <img
+              className="flag"
+              src={question.flags.png}
+              alt="Flags"
+            />
+          </div>
+          {/* Reveals flag name when user presses the skip button */}
+          {showFlagName && 
+            <div className=" flag-name">{question.name.common}</div> 
+          }
+        </>
+      );
+    }
+
+    return (
+      <>
+        <div>
+          <h2 className="flag">Want to test your geography knowledge? <br /> Ready for the ultimate flag challenge? <br /> Press <strong>"Start"</strong> to begin!</h2>
+        </div>
+      </>
+    );
+  };
 
   useEffect(() => {
     async function startGame () {
-      // resets the game
       setLoading(true);
       setScore(0);
 
@@ -48,11 +79,12 @@ import quizQuestions from './functions/quizQuestions';
     }, 2000);
   }
 
+  // checks the correct answer against the user's input
   const checkAnswer = (question: any, userAnswer: string) => {
     const correct: boolean = 
       question.name.common === userAnswer ||
       question.name.official === userAnswer ||
-      question.name.altSpellings === userAnswer
+      question.name.altSpellings === userAnswer;
 
     if (correct) {
       setScore(score + 1)
@@ -72,17 +104,30 @@ import quizQuestions from './functions/quizQuestions';
     }
   };
 
+  // produces the next question in the game
   function newQuestion () {
     const idx = Math.floor(Math.random()*questions.length);
     setQuestion(questions.splice(idx, 1)[0]);
+    setShowFlagName(false)
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "1") {
+  const handleSkip = () => {
+    setTimeout(() => {
+      setShowFlagName(true);
+    }, 0);
+
+    setTimeout(() => {
       newQuestion();
-      e.preventDefault();
-    }
+    }, 1500);
   };
+
+    // allows users to skip questions using the '1' key
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "1") {
+        handleSkip();
+        e.preventDefault();
+      }
+    };
 
   return (
     <>
@@ -91,13 +136,13 @@ import quizQuestions from './functions/quizQuestions';
         <Score score={score} />
         <Game question={question} />
         <br/>
-        <button onClick={newQuestion} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
+        <button onClick={handleSkip} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
           {Boolean(question) ? 'Skip' : 'Start'}
         </button>
         <div className='skip-text'>{Boolean(question) ? 'Or press key "1"' : ''}</div>
         <br />
         {Boolean(question) ?  
-          <div className={(isWrongAnswer) ? 'label-answer text-danger' : isCorrectAnswer ? 'label-answer text-success' : 'label-answer text-secondary-emphasis'}>{isWrongAnswer ? 'Wrong Answer!' : isCorrectAnswer ? 'Correct Answer!' : 'Enter Answer'}</div>
+          <div className={(isWrongAnswer) ? 'label-answer text-danger' : isCorrectAnswer ? 'label-answer text-success' : 'label-answer text-secondary-emphasis'}>{isWrongAnswer ? 'Wrong!' : isCorrectAnswer ? 'Correct!' : 'Enter Answer'}</div>
         : ''}
         <Answers question={question} checkAnswer={checkAnswer} />
       </div>
