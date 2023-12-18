@@ -4,7 +4,7 @@ const Header = () => {
       <>
         <div className='header'>
           <div className="title">
-            <h3>Flags Around <br /> The World 🌍</h3>
+            <h3>Flags Around The World 🌍</h3>
             <a
               href="https://www.linkedin.com/in/jbkad/"
               target='_blank' 
@@ -15,7 +15,7 @@ const Header = () => {
           </div>
 
           <div className="help-btn">
-            <span className="text-body">Beta version</span> 
+            <span className="text-body">Beta</span> 
           </div>
         </div>
       </>
