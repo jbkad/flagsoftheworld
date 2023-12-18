@@ -6,9 +6,6 @@ import Header from './components/Header';
 import Score from './components/Score';
 import Answers from './components/Answers';
 import quizQuestions from './functions/quizQuestions';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Notice from './pages/Notice';
-
 
 // functions
   const Country:React.FC = () => {
