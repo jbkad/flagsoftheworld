@@ -1,55 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-
-// components
 import Header from './components/Header';
 import Score from './components/Score';
+import Game from './components/Game';
 import Answers from './components/Answers';
 import quizQuestions from './functions/quizQuestions';
 
-// functions
-  const Country:React.FC = () => {
-
+const Country:React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
   let [score, setScore] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [gameOver, setGameOver] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
   const [showFlagName, setShowFlagName] = useState(false);
-
-
-  const Game = ({ question }: { question: any }) => {
-
-    if (question) {
-      return (
-        <>
-          <div className="flag-container">
-            <img
-              className="flag"
-              src={question.flags.png}
-              alt="Flags"
-            />
-          </div>
-          {/* Reveals flag name when user presses the skip button */}
-          {showFlagName && 
-            <div className=" flag-name">{question.name.common}</div> 
-          }
-        </>
-      );
-    }
-
-    return (
-      <>
-        <div>
-          <h2 className="flag">Want to test your geography knowledge? <br /> Ready for the ultimate flag challenge? <br /> Press <strong>"Start"</strong> to begin!</h2>
-        </div>
-      </>
-    );
-  };
 
   useEffect(() => {
     async function startGame () {
@@ -78,10 +45,16 @@ import quizQuestions from './functions/quizQuestions';
 
   // checks the correct answer against the user's input
   const checkAnswer = (question: any, userAnswer: string) => {
+    const commonName = question.name.common.toLowerCase();
+    const officialName = question.name.official.toLowerCase();
+    const alternativeSpelling = question.name.altSpellings || [];
+
     const correct: boolean = 
-      question.name.common === userAnswer ||
-      question.name.official === userAnswer ||
-      question.name.altSpellings === userAnswer;
+      commonName === userAnswer.toLowerCase() ||
+      officialName === userAnswer.toLowerCase() ||
+      alternativeSpelling
+        .map((spelling: string) => spelling.toLowerCase())
+        .includes(userAnswer.toLowerCase());
 
     if (correct) {
       setScore(score + 1)
@@ -93,6 +66,8 @@ import quizQuestions from './functions/quizQuestions';
       setTimeout(() => {
         setIsCorrectAnswer(false);
       }, 600);
+
+      setUserAnswer('');
 
       return correct
     } else {
@@ -131,7 +106,7 @@ import quizQuestions from './functions/quizQuestions';
       <Header />
       <div className="app" onKeyDown={handleKeyDown} tabIndex={0}>
         <Score score={score} />
-        <Game question={question} />
+        <Game question={question} showFlagName={showFlagName} />
         <br/>
         <button onClick={handleSkip} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
           {Boolean(question) ? 'Skip' : 'Start'}
