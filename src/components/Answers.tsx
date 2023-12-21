@@ -1,31 +1,23 @@
-import { useState } from 'react';
-import '../App.css';
+import React, { useState } from 'react';
 
-const Answers = ({question, checkAnswer}: {question: any, checkAnswer: any}) => {
+const Answers: React.FC<{ question: any; checkAnswer: (question: any, userAnswer: string) => void }> = ({ question, checkAnswer }) => {
+    const [userAnswer, setUserAnswer] = useState('');
 
-    const [userAnswer, setUserAnswer] = useState('')
-
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
-        const correct = checkAnswer(question, userAnswer)
-        if (correct) {
-            setUserAnswer('')
-        }
-    }
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        checkAnswer(question, userAnswer);
+    };
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    className="form-control answer-box"
-                    value={userAnswer}
-                    onChange={(e) => setUserAnswer(e.target.value)}
-                />
-                <small className="form-text text-muted">TIP: Answers are case sensitive</small>
-            </form>
-        </>
-    )
-}
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                className="form-control answer-box"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+            />
+        </form>
+    );
+};
 
-export default Answers
+export default Answers;

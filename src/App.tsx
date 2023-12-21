@@ -15,7 +15,6 @@ const Country:React.FC = () => {
   const [question, setQuestion] = useState(null);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
-  const [userAnswer, setUserAnswer] = useState('');
   const [showFlagName, setShowFlagName] = useState(false);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const Country:React.FC = () => {
   }
 
   // checks the correct answer against the user's input
-  const checkAnswer = (question: any, userAnswer: string) => {
+  const checkAnswer = (question: any, userAnswer: string): boolean => {
     const commonName = question.name.common.toLowerCase();
     const officialName = question.name.official.toLowerCase();
     const alternativeSpelling = question.name.altSpellings || [];
@@ -67,13 +66,16 @@ const Country:React.FC = () => {
         setIsCorrectAnswer(false);
       }, 600);
 
-      setUserAnswer('');
-
-      return correct
     } else {
       wrongAnswer();
-      return false;
+
+      // clears 'Wrong answer!' prompt after 2s
+      setTimeout(() => {
+        setIsWrongAnswer(false);
+      }, 2000);
     }
+
+    return correct;
   };
 
   // produces the next question in the game
