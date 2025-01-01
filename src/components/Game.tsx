@@ -14,7 +14,7 @@ const Game: React.FC<{ question: any; showFlagName: boolean }> = ({ question, sh
 
     return (
         <div>
-          <h2 className="flag">Want to test your geography knowledge? <br /> Ready for the ultimate flag challenge? <br /> Press <strong>"Start"</strong> to begin!</h2>
+          <div className="flag">How well do you know the world's flags? <br/> Put your knowledge to the test!</div>
         </div>
     );
 }

@@ -11,8 +11,9 @@ const Answers: React.FC<{ question: any; checkAnswer: (question: any, userAnswer
     return (
         <form onSubmit={handleSubmit}>
             <input
-                type="text"
-                className="form-control answer-box"
+                type='text'
+                className='form-control answer-box'
+                placeholder='Enter Answer'
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
             />
