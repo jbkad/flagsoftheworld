@@ -107,21 +107,27 @@ const Country:React.FC = () => {
 
       <div className='app' onKeyDown={handleKeyDown} tabIndex={0}>
         <div className='card'>
-          <Header />
-          <Score score={score} />
-          <Game question={question} showFlagName={showFlagName} />
-          <br/>
-          {/* <br/> */}
-          <button onClick={handleSkip} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
-            {Boolean(question) ? 'Skip' : 'Play'}
-          </button>
-          <div className='skip-text'>{Boolean(question) ? 'Or press key "1"' : ''}</div>
-          {/* <br /> */}
-          {/* <br/> */}
-          {Boolean(question) ?  
-            <div className={(isWrongAnswer) ? 'label-answer text-danger' : isCorrectAnswer ? 'label-answer text-success' : 'label-answer text-secondary-emphasis'}>{isWrongAnswer ? 'Wrong!' : isCorrectAnswer ? 'Correct!' : 'Enter Answer'}</div>
-          : ''}
-          <Answers question={question} checkAnswer={checkAnswer} />
+          <div className='row-1'>
+            <Header />
+            <Score score={score} />
+          </div>
+          <div className='row-2'>
+            <Game question={question} showFlagName={showFlagName} />
+            <br/>
+            {/* <br/> */}
+            <button onClick={handleSkip} className={Boolean(question) ? 'btn btn-danger skip-btn' : 'btn btn-success skip-btn'}>
+              {Boolean(question) ? 'Skip' : 'Play'}
+            </button>
+            <div className='skip-text'>{Boolean(question) ? 'Or press key "1"' : ''}</div>
+            {/* <br /> */}
+            {/* <br/> */}
+            {Boolean(question) ?  
+              <div className={(isWrongAnswer) ? 'label-answer text-danger' : isCorrectAnswer ? 'label-answer text-success' : 'label-answer text-secondary-emphasis'}>{isWrongAnswer ? 'Wrong!' : isCorrectAnswer ? 'Correct!' : 'Enter Answer'}</div>
+            : ''}
+            {Boolean(question) ?  
+            <Answers question={question} checkAnswer={checkAnswer} />
+            : ''}
+          </div>
         </div>
       </div>
 
